@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1 id = "highest"></h1>
+    <h1 id = "lowest"></h1>
+    <h1 id = "average"></h1>
+    <script>
+
+        
+
+fetch("studentGrades.xml").then(response => {
+    return response.text();
+}).then(xmlString => {
+    let counter = 0;
+    let highest = 0;
+    let lowest = 100;
+    let total = 0;
+
+       
+       let xmlDocument = new DOMParser().parseFromString(xmlString, "text/xml");
+       const studentGrade = xmlDocument.querySelectorAll("studentResult");
+       for(studentResult of studentGrade){
+
+        let studentTestGrade = studentResult.querySelector("studentGrade").textContent;
+          total += parseInt(studentTestGrade);
+            if(parseInt(studentTestGrade) > highest){
+                highest = parseInt(studentTestGrade);
+            } else if(parseInt(studentTestGrade) < lowest){
+                lowest = parseInt(studentTestGrade);
+            }
+              counter++; }
+
+              document.getElementById("highest").innerHTML = "The heighest grade was " + highest;
+       document.getElementById("lowest").innerHTML = "The lowest grade was " + lowest;
+       document.getElementById("average").innerHTML = "The average grade was " + total/counter;
+});   
+
+
+
+       
+ 
+    </script>
+    
+</body>
+</html>
